@@ -11,6 +11,12 @@
     @foreach ($courses as $course)
         <p>Name: {{ $course->name }}</p>
         <p>Description: {{ $course->description }}</p>
+        <p>Forum</p>
+        @foreach ($course->forums as $forum)
+            <p>Title: {{ $forum->title }}</p>
+            <p>Description: {{ $forum->description }}</p>
+            <p>Attachment: {{ $forum->attachment }}</p>
+        @endforeach
         <br>
     @endforeach
 

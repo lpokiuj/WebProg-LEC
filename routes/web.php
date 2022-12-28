@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ObjectiveController;
 use App\Http\Controllers\CourseController;
+use App\Http\Controllers\ForumController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,8 +16,10 @@ use App\Http\Controllers\CourseController;
 |
 */
 
-Route::resource('/objectives', ObjectiveController::class);
-Route::resource('/courses', CourseController::class);
+Route::resource('objectives', ObjectiveController::class);
+Route::resource('forums', ForumController::class);
+Route::resource('courses', CourseController::class);
+Route::resource('courses.forums', ForumController::class);
 
 Route::get('/', function () {
     return view('welcome');

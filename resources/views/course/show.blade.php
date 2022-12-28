@@ -10,6 +10,14 @@
     Name: {{ $course->name }}
     Desciption: {{ $course->description }}
 
+    @foreach ($course->forums as $forum)
+        <p>Title: {{ $forum->title }}</p>
+        <p>Description: {{ $forum->description }}</p>
+        <p>Attachment: {{ $forum->attachment }}</p>
+    @endforeach
+
+    <a href="/courses/{{ $course->id }}/forums/create">Create forum</a>
+
     <form class="" action="/courses/{{$course->id}}" method="POST" enctype="multipart/form-data">
         @method('DELETE')
         @csrf

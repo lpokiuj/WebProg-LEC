@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Models\Course;
 
@@ -14,7 +15,7 @@ class CourseController extends Controller
      */
     public function index()
     {
-        $courses = Course::all();
+        $courses = Course::with('forums')->get();
         return view('course.index', [
             'courses' => $courses
         ]);
@@ -56,7 +57,7 @@ class CourseController extends Controller
      */
     public function show($id)
     {
-        $course = Course::find($id);
+        $course = Course::find($id)->load('forums');
         return view('course.show', [
             'course' => $course
         ]);
@@ -104,6 +105,7 @@ class CourseController extends Controller
      */
     public function destroy($id)
     {
+        DB::table('forums')->where('courseID', $id)->delete();
         Course::destroy($id);
         return redirect('/courses');
     }
