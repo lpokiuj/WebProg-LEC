@@ -7,7 +7,7 @@
     <title>Document</title>
 </head>
 <body>
-
+    <h1>Ini Course Page</h1>
     @foreach ($courses as $course)
         <p>Name: {{ $course->name }}</p>
         <p>Description: {{ $course->description }}</p>
@@ -25,6 +25,11 @@
         @endforeach
         <br>
     @endforeach
+
+    <form action="/logout" method="POST">
+        @csrf
+        <button type="submit">Logout pok..</button>
+    </form>
 
 </body>
 </html>
