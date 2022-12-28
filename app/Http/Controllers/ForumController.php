@@ -3,10 +3,14 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\Course;
 use App\Models\Forum;
 use App\Models\Objective;
+use App\Models\User;
+use App\Models\CourseStudent;
+use App\Models\CourseTeacher;
 
 class ForumController extends Controller
 {
@@ -27,6 +31,11 @@ class ForumController extends Controller
      */
     public function create($id)
     {
+        $user = User::find(Auth::id());
+        $courseTeacher = CourseTeacher::where('courseID', $id)->first();
+        if($courseTeacher->userID != $user->id){
+            abort(401);
+        }
         return view('course.forum.create', [
             'id' => $id
         ]);
