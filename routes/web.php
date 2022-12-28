@@ -35,6 +35,8 @@ Route::group(['middleware' => ['auth']], function(){
         'index',
         'show'
     ]);
+    Route::get('/list-course', [CourseController::class, 'courseList']);
+    Route::post('/enroll/{course}', [CourseController::class, 'enroll']);
 });
 
 Route::get('/', function () {

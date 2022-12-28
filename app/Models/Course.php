@@ -15,4 +15,14 @@ class Course extends Model
     {
         return $this->hasMany(Forum::class, 'courseID');
     }
+
+    public function students()
+    {
+        return $this->belongsToMany(User::class, 'course_students', 'courseID', 'userID');
+    }
+
+    public function teachers()
+    {
+        return $this->belongsToMany(User::class, 'course_teachers', 'courseID', 'userID');
+    }
 }

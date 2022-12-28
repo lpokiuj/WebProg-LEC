@@ -3,8 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\Course;
+use App\Models\User;
+use App\Models\CourseStudent;
+use App\Models\CourseTeacher;
 
 class CourseController extends Controller
 {
@@ -15,7 +19,16 @@ class CourseController extends Controller
      */
     public function index()
     {
-        $courses = Course::with('forums')->get();
+        $user = User::find(Auth::id());
+        $courses = [];
+        if($user->isTeacher){
+            $courses = Course::with('teachers')->get();
+        }
+        else{
+            $courses = Course::whereHas('students', function($query) use ($user){
+                $query->where('userID', $user->id);
+            })->with('teachers')->get();
+        }
         return view('course.index', [
             'courses' => $courses
         ]);
@@ -39,13 +52,24 @@ class CourseController extends Controller
      */
     public function store(Request $request)
     {
+        $user = User::find(Auth::id());
+        if(!$user->isTeacher){
+            abort(401);
+        }
+
         $request->validate([
             'name' => ['required', 'string'],
             'description' => ['required', 'string']
         ]);
 
         $data = $request->all();
-        Course::create($data);
+        $course = Course::create($data);
+
+        CourseTeacher::create([
+            'courseID' => $course->id,
+            'userID' => $user->id
+        ]);
+
         return redirect('/courses');
     }
 
@@ -57,7 +81,11 @@ class CourseController extends Controller
      */
     public function show($id)
     {
-        $course = Course::find($id)->load('forums');
+        $course = Course::find($id)->load([
+            'forums',
+            'teachers'
+        ]);
+
         return view('course.show', [
             'course' => $course
         ]);
@@ -72,6 +100,13 @@ class CourseController extends Controller
     public function edit($id)
     {
         $course = Course::find($id);
+
+        $user = User::find(Auth::id());
+        $courseTeacher = CourseTeacher::where('courseID', $id)->first();
+        if($courseTeacher->userID != $user->id){
+            abort(401);
+        }
+
         return view('course.edit', [
             'course' => $course
         ]);
@@ -111,5 +146,36 @@ class CourseController extends Controller
         DB::table('forums')->where('courseID', $course->id)->delete();
         Course::destroy($course->id);
         return redirect('/courses');
+    }
+
+    public function enroll(Course $course)
+    {
+        $user = User::find(Auth::id());
+        if($user->isTeacher){
+            abort(401);
+        }
+
+        CourseStudent::create([
+            'userID' => $user->id,
+            'courseID' => $course->id
+        ]);
+
+        return redirect('/courses');
+    }
+
+    public function courseList()
+    {
+        $user = User::find(Auth::id());
+        if($user->isTeacher){
+            abort(401);
+        }
+
+        $courses = Course::whereDoesntHave('students', function($query) use ($user){
+            $query->where('userID', $user->id);
+        })->get();
+
+        return view('course.list', [
+            'courses' => $courses
+        ]);
     }
 }

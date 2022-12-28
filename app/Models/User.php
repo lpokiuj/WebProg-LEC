@@ -37,4 +37,12 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function courses()
+    {
+        if ($this->isTeacher) {
+            return $this->belongsToMany(CourseTeacher::class, 'course_teachers', 'userID', 'courseID');
+        }
+        return $this->belongsToMany(CourseStudent::class, 'course_students', 'userID', 'courseID');
+    }
 }
