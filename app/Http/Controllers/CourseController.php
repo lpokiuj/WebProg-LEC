@@ -22,7 +22,9 @@ class CourseController extends Controller
         $user = User::find(Auth::id());
         $courses = [];
         if($user->isTeacher){
-            $courses = Course::with('teachers')->get();
+            $courses = Course::whereHas('teachers', function($query) use ($user){
+                $query->where('userID', $user->id);
+            })->with('teachers')->get();
         }
         else{
             $courses = Course::whereHas('students', function($query) use ($user){
