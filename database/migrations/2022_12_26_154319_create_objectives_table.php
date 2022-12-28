@@ -15,6 +15,7 @@ class CreateObjectivesTable extends Migration
     {
         Schema::create('objectives', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('forumID');
             $table->string('description');
             $table->timestamps();
         });

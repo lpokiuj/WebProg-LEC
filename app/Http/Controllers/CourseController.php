@@ -103,10 +103,13 @@ class CourseController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Course $course)
     {
-        DB::table('forums')->where('courseID', $id)->delete();
-        Course::destroy($id);
+        foreach($course->forums as $forum){
+            DB::table('objectives')->where('forumID', $forum->id)->delete();
+        }
+        DB::table('forums')->where('courseID', $course->id)->delete();
+        Course::destroy($course->id);
         return redirect('/courses');
     }
 }

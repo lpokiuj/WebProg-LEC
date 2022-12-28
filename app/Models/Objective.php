@@ -10,4 +10,9 @@ class Objective extends Model
     use HasFactory;
 
     protected $guarded = [];
+
+    public function forum()
+    {
+        return $this->belongsTo(Forum::class, 'objectiveID');
+    }
 }

@@ -22,5 +22,5 @@ Route::resource('courses', CourseController::class);
 Route::resource('courses.forums', ForumController::class);
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect('/courses');
 });

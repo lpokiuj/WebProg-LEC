@@ -15,4 +15,9 @@ class Forum extends Model
     {
         return $this->belongsTo(Course::class, 'forumID');
     }
+
+    public function objectives()
+    {
+        return $this->hasMany(Objective::class, 'forumID');
+    }
 }
