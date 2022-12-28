@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Models\Course;
 use App\Models\Forum;
@@ -43,22 +44,22 @@ class ForumController extends Controller
             'title' => ['required', 'string'],
             'description' => ['required', 'string'],
             'attachment' => ['required', 'File'],
-            // 'objective' => ['required', 'array'],
-            // 'objective.*' => ['required', 'string']
+            'objective' => ['required', 'array'],
+            'objective.*' => ['required', 'string']
         ]);
 
         $data = $request->except('objective');
         $data['courseID'] = $course->id;
 
-        // $objectives = $request->objective;
-        // foreach($objectives as $objective){
-        //     Objective::create([
-        //         'courseID' => $course->id,
-        //         'description' => $objective
-        //     ]);
-        // }
+        $forum = Forum::create($data);
+        $objectives = $request->objective;
+        foreach($objectives as $objective){
+            Objective::create([
+                'forumID' => $forum->id,
+                'description' => $objective
+            ]);
+        }
 
-        Forum::create($data);
         return redirect('/courses/'.$course->id);
     }
 
@@ -94,29 +95,29 @@ class ForumController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Course $course, $id)
+    public function update(Request $request, Course $course, Forum $forum)
     {
         $request->validate([
             'title' => ['required', 'string'],
             'description' => ['required', 'string'],
             'attachment' => ['required', 'File'],
-            // 'objective' => ['required', 'array'],
-            // 'objective.*' => ['required', 'string']
+            'objective' => ['required', 'array'],
+            'objective.*' => ['required', 'string']
         ]);
 
         $data = $request->except('objective');
         $data['courseID'] = $course->id;
 
-        $forum = Forum::find($id);
         $forum->update($data);
 
-        // $objectives = $request->objective;
-        // foreach($objectives as $objective){
-        //     Objective::create([
-        //         'courseID' => $course->id,
-        //         'description' => $objective
-        //     ]);
-        // }
+        $objectives = $request->objective;
+        DB::table('objective')->where('forumID', $forum->id)->delete();
+        foreach($objectives as $objective){
+            Objective::create([
+                'courseID' => $course->id,
+                'description' => $objective
+            ]);
+        }
         return redirect('/courses/'.$course->id);
     }
 

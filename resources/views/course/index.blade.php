@@ -16,6 +16,12 @@
             <p>Title: {{ $forum->title }}</p>
             <p>Description: {{ $forum->description }}</p>
             <p>Attachment: {{ $forum->attachment }}</p>
+            <p>Objective</p>
+            @foreach ($forum->objectives as $objective)
+                <p>{{ $objective->description }}</p>
+                <br>
+            @endforeach
+            <br>
         @endforeach
         <br>
     @endforeach

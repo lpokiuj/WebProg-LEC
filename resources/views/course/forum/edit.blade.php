@@ -26,6 +26,13 @@
         <input type="text" name="description" value="{{ $forum->description }}">
         <label for="attachment">Attachment: </label>
         <input type="file" name="attachment" value="{{ $forum->attachment }}">
+
+        <div>
+            <label for="objective">Objective</label>
+            <input type="text" name="objective[]">
+            <input type="text" name="objective[]">
+            <input type="text" name="objective[]">
+        </div>
         <button type="submit">Submit</button>
     </form>
 

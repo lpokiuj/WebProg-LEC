@@ -14,6 +14,11 @@
         <p>Title: {{ $forum->title }}</p>
         <p>Description: {{ $forum->description }}</p>
         <p>Attachment: {{ $forum->attachment }}</p>
+        <p>Objective</p>
+            @foreach ($forum->objectives as $objective)
+                <p>{{ $objective->description }}</p>
+                <br>
+            @endforeach
     @endforeach
 
     <a href="/courses/{{ $course->id }}/forums/create">Create forum</a>
