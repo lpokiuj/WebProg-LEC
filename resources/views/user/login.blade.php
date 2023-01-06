@@ -1,39 +1,68 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-</head>
-<body>
+@extends('template')
 
-    @if(session()->has('error'))
-        <p>{{ session()->get('error') }}</p>
-    @endif
-    @if ($errors->any())
-    <ul class="ps-5">
-        @foreach ($errors->all() as $error)
-            <li>{{ $error }}</li>
-        @endforeach
-    </ul>
-    @endif
+@section('content')
 
-    <form action="/login" method="POST" enctype="multipart/form-data">
-        @csrf
-        <div class="login">
-            <label for="email" class="email">E-mail</label>
-            <input type="text" id="email" name="email" placeholder="Enter your email">
+<div class="d-flex align-items-center justify-content-center" style="min-height: 1100px">
+    <div class="d-flex align-items-center justify-content-center container flex-column border-primary" style="border: 4px solid #1FB486; height: 500px; width: 400px; border-radius: 5px;">
+        <div class="row text-primary">
+            <h1>
+                Learn
+            </h1>
         </div>
-        <div class="login">
-            <label class="email">Password</label>
-            <input type="password" id="email" name="password" class="password" placeholder="Enter your password">
+        <div class="row text-danger" style="height: 50px;">
+        @if(session()->has('error'))
+                <p>{{ session()->get('error') }}</p>
+            @endif
+            @if ($errors->any())
+            <ul class="ps-5">
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+            @endif
         </div>
-        <div class="remember-me">
-            <input type="checkbox" id="remember-me" name="remember" value=true>
-            <label>Remember me</label>
+        <div class="row">
+            <form action="/login" method="POST" enctype="multipart/form-data">
+                @csrf
+                <div class="mb-3">
+                    <label for="email" class="email form-title">Email address</label>
+                    <input type="text" id="email" name="email" class="form-control " placeholder="Enter your email">
+                    <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+                </div>
+                <div class="mb-3">
+                    <label for="exampleInputPassword1" class="form-label form-title">Password</label>
+                    <input type="password" id="email" name="password" class="password form-control" placeholder="Enter your password">
+                </div>
+                <div class="mb-3 form-check">
+                    <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                    <label class="form-check-label" type="checkbox" id="remember-me" name="remember" value=true>Remember Me</label>
+                </div>
+                <button type="submit" class="btn btn-primary login-button" style="width: 100%;">Login</button>
+                <div class="d-flex justify-content-center my-2">Or</div>
+                <a href="/register" class="btn btn-primary login-button mb-2" style="width: 100%;">Register</a>
+            </form>
+            
+            
+            <!-- <form action="/login" method="POST" enctype="multipart/form-data">
+                @csrf
+                <div class="login d-flex justify-content-center flex-column">
+                    <label for="email" class="email">E-mail</label>
+                    <input type="text" id="email" name="email" placeholder="Enter your email">
+                </div>
+                <div class="login  d-flex justify-content-center flex-column">
+                    <label class="email">Password</label>
+                    <input type="password" id="email" name="password" class="password" placeholder="Enter your password">
+                </div>
+                <div class="remember-me">
+                    <input type="checkbox" id="remember-me" name="remember" value=true>
+                    <label>Remember me</label>
+                </div>
+                <button type="submit" class="login-button">Login</button>
+            </form> -->
         </div>
-        <button type="submit" class="login-button">Login</button>
-    </form>
-</body>
-</html>
+
+        
+    </div>
+
+</div>
+@endsection
