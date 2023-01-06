@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Course;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
@@ -60,7 +61,19 @@ class UserController extends Controller
     public function show()
     {
         $user = User::find(Auth::id());
-        return view('user.show', ['user' => $user]);
+        $courses = [];
+        if($user->isTeacher){
+            $courses = Course::whereHas('teachers', function($query) use ($user){
+                $query->where('userID', $user->id);
+            })->with('teachers')->get();
+        }
+        else{
+            $courses = Course::whereHas('students', function($query) use ($user){
+                $query->where('userID', $user->id);
+            })->with('teachers')->get();
+        }
+
+        return view('user.show', ['user' => $user, 'courses' => $courses]);
     }
 
     public function edit()
