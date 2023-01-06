@@ -11,7 +11,7 @@
     }
 
     .add-course{
-        height: 50px; 
+        height: 50px;
         text-decoration: none;
         border-radius: 10px;
     }
@@ -25,7 +25,7 @@
         overflow: hidden;
         display: -webkit-box !important;
         -webkit-line-clamp: 8;
-        -webkit-box-orient: vertical; 
+        -webkit-box-orient: vertical;
         white-space: normal;
     }
 
@@ -53,7 +53,7 @@
                 </a>
             @endif
     @endguest
-    
+
     <div class="row text-primary mt-3">
         @if(auth()->user()->isTeacher)
             <h1>Your Courses</h1>
@@ -61,7 +61,7 @@
             <h1>Assigned Course</h1>
         @endif
     </div>
-    
+
     <div class="row">
         @guest
         @else
@@ -85,7 +85,7 @@
                         <div class="card-body">
                             <h5 class="card-title">{{ $course->name }}</h5>
                             <p class="card-text" style="height: 69%;">{{ $course->description }}</p>
-                            <form action="/courses/{{ $course->id }}" method="POST">
+                            <form action="/quit/{{ $course->id }}" method="POST">
                                 @method('DELETE')
                                 @csrf
                                 <button class="btn btn-danger d-flex justify-content-center" style="width: 100%;">Quit</button>
@@ -97,7 +97,7 @@
                     <h3 class="d-flex justify-content-center align-items-center" style="filter:invert(80%); height: 20rem;">No course has been signed</h3>
                 @endif
             @endif
-        @endguest 
+        @endguest
     </div>
 </div>
 @endsection
