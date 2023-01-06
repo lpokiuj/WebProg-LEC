@@ -32,11 +32,11 @@ class DatabaseSeeder extends Seeder
             'isTeacher' => false
         ]);
 
-        foreach (range(1, 5) as $index) {
-            $teacher->courses()->create([
-                'name' => $faker->name,
-                'description' => $faker->text,
-            ]);
-        }
+        // foreach (range(1, 5) as $index) {
+        //     $teacher->courses()->create([
+        //         'name' => $faker->name,
+        //         'description' => $faker->text,
+        //     ]);
+        // }
     }
 }
