@@ -2,7 +2,7 @@
 
 @section('content')
 <style>
-    .card{
+        .card{
         cursor: pointer;
         transition: 0.3s;
     }
@@ -15,11 +15,6 @@
         text-decoration: none;
         border-radius: 10px;
     }
-    .card-title{
-        overflow: hidden;
-        white-space: nowrap;
-        text-overflow: ellipsis;
-    }
     .card-text{
         /* text-overflow: ellipsis; */
         overflow: hidden;
@@ -28,41 +23,30 @@
         -webkit-box-orient: vertical; 
         white-space: normal;
     }
-
 </style>
 
-<div class="container" style="min-height: 980px;">
-    <div class="row bg-primary d-flex justify-content-center align-items-center mt-5" style="height: 18rem; border-radius: 10px;">
-        <div>
-            <form class="d-flex flex-column mx-5" role="search">
-                <label for="">
-                    <h1 class="text-white">
-                        What do you want to learn?
-                    </h1>
-                </label>
-                <input class="form-control" type="search" placeholder="Search Courses here..." aria-label="Search">
-                <button class="btn btn-outline-success text-white mt-2" style="border: 2px solid white;" type="submit">Search</button>
-            </form>
+    <div class="container" style="min-height: 100vh;">
+        <div class="row mt-4">
+            <div class="col-3 d-flex align-items-center justify-content-center">
+                <img src="/User.svg" style="height: 100%;" alt="">
+            </div>
+            <div class="col-9">
+                <div>
+                    <h1>{{ $user->name }}</h1>
+                </div>
+                <div>
+                    <p>{{ $user->email }}</p>
+                </div>
+            </div>
         </div>
-    </div>
-    @guest
-        @else
+        <div class="row mt-5">
             @if(auth()->user()->isTeacher)
-                <a href="/courses/create" class="row btn btn-success mt-2 d-flex justify-content-center align-items-center add-course">
-                    Create Course
-                </a>
+                <h1>Your Courses</h1>
+            @else
+                <h2>Course that your already enroll</h2>
             @endif
-    @endguest
-    
-    <div class="row text-primary mt-3">
-        @if(auth()->user()->isTeacher)
-            <h1>Your Courses</h1>
-        @else
-            <h1>Assigned Course</h1>
-        @endif
-    </div>
-    
-    <div class="row">
+        </div>
+        <div class="row">
         @guest
         @else
             @if(auth()->user()->isTeacher)
@@ -84,7 +68,7 @@
                     <a href="/courses/{{$course->id}}" class="card m-2 text-dark" style="width: 18rem; height: 20rem; text-decoration: none;">
                         <div class="card-body">
                             <h5 class="card-title">{{ $course->name }}</h5>
-                            <p class="card-text" style="height: 69%;">{{ $course->description }}</p>
+                            <p class="card-text" style="height: 70%;">{{ $course->description }}</p>
                             <form action="/courses/{{ $course->id }}" method="POST">
                                 @method('DELETE')
                                 @csrf
@@ -99,5 +83,5 @@
             @endif
         @endguest 
     </div>
-</div>
+    </div>
 @endsection
