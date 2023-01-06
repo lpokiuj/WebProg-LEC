@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 use App\Models\Course;
 use App\Models\Forum;
@@ -59,6 +60,8 @@ class ForumController extends Controller
 
         $data = $request->except('objective');
         $data['courseID'] = $course->id;
+
+        $data['attachment'] = Storage::putFile('attachment', $request->file('attachment'));
 
         $forum = Forum::create($data);
         $objectives = $request->objective;
