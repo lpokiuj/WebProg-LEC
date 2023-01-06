@@ -180,4 +180,16 @@ class CourseController extends Controller
             'courses' => $courses
         ]);
     }
+
+    public function quit(Course $course)
+    {
+        $user = User::find(Auth::id());
+        if($user->isTeacher){
+            abort(401);
+        }
+
+        $courseStudent = CourseStudent::where('userID', $user->id)->where('courseID', $course->id)->first();
+        CourseStudent::destroy($courseStudent->id);
+        return redirect('/courses');
+    }
 }

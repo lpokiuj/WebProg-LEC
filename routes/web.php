@@ -38,10 +38,11 @@ Route::group(['middleware' => ['auth']], function(){
     Route::get('/list-course', [CourseController::class, 'courseList']);
     Route::post('/enroll/{course}', [CourseController::class, 'enroll']);
     Route::get('/profile', [UserController::class, 'show']);
+    Route::delete('/quit/{course}', [CourseController::class, 'quit']);
 });
 
 Route::get('/', function () {
-    return redirect('/login'); 
+    return redirect('/login');
 });
 Route::get('/home', function () {
     return redirect('/courses');
