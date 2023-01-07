@@ -2,7 +2,7 @@
 
 @section('content')
 
-<div class="d-flex align-items-center justify-content-center" style="min-height: 1100px">
+<div class="d-flex align-items-center justify-content-center" style="min-height: 100vh">
     <div class="d-flex align-items-center justify-content-center container flex-column border-primary" style="border: 4px solid #1FB486; height: 500px; width: 400px; border-radius: 5px;">
         <div class="row text-primary">
             <h1>
@@ -41,24 +41,6 @@
                 <div class="d-flex justify-content-center my-2">Or</div>
                 <a href="/register" class="btn btn-primary login-button mb-2" style="width: 100%;">Register</a>
             </form>
-            
-            
-            <!-- <form action="/login" method="POST" enctype="multipart/form-data">
-                @csrf
-                <div class="login d-flex justify-content-center flex-column">
-                    <label for="email" class="email">E-mail</label>
-                    <input type="text" id="email" name="email" placeholder="Enter your email">
-                </div>
-                <div class="login  d-flex justify-content-center flex-column">
-                    <label class="email">Password</label>
-                    <input type="password" id="email" name="password" class="password" placeholder="Enter your password">
-                </div>
-                <div class="remember-me">
-                    <input type="checkbox" id="remember-me" name="remember" value=true>
-                    <label>Remember me</label>
-                </div>
-                <button type="submit" class="login-button">Login</button>
-            </form> -->
         </div>
 
         
