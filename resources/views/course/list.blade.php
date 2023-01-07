@@ -15,6 +15,11 @@
         text-decoration: none;
         border-radius: 10px;
     }
+    .card-title{
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
     .card-text{
         /* text-overflow: ellipsis; */
         overflow: hidden;
