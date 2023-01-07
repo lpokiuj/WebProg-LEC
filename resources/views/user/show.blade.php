@@ -15,6 +15,11 @@
         text-decoration: none;
         border-radius: 10px;
     }
+    .card-title{
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
     .card-text{
         /* text-overflow: ellipsis; */
         overflow: hidden;
@@ -69,7 +74,7 @@
                         <div class="card-body">
                             <h5 class="card-title">{{ $course->name }}</h5>
                             <p class="card-text" style="height: 70%;">{{ $course->description }}</p>
-                            <form action="/courses/{{ $course->id }}" method="POST">
+                            <form action="/quit/{{ $course->id }}" method="POST">
                                 @method('DELETE')
                                 @csrf
                                 <button class="btn btn-danger d-flex justify-content-center" style="width: 100%;">Quit</button>

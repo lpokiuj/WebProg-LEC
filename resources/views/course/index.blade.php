@@ -9,7 +9,6 @@
     .card:hover{
         box-shadow: 0 0px 10px rgba(13,110,253);
     }
-
     .add-course{
         height: 50px;
         text-decoration: none;
@@ -94,7 +93,7 @@
                     </a>
                     @endforeach
                     @else
-                    <h3 class="d-flex justify-content-center align-items-center" style="filter:invert(80%); height: 20rem;">No course has been signed</h3>
+                    <h3 class="d-flex justify-content-center align-items-center" style="filter:invert(80%); height: 20rem;">No course has been Assigned</h3>
                 @endif
             @endif
         @endguest
