@@ -17,22 +17,33 @@ class CourseController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        $query = $request->query('search', '');
+
         $user = User::find(Auth::id());
         $courses = [];
+        $queriedCourses = [];
         if($user->isTeacher){
             $courses = Course::whereHas('teachers', function($query) use ($user){
                 $query->where('userID', $user->id);
             })->with('teachers')->get();
+            $queriedCourses = Course::whereHas('teachers', function($query) use ($user){
+                $query->where('userID', $user->id);
+            })->with('teachers')->withSearch($query)->get();
         }
         else{
             $courses = Course::whereHas('students', function($query) use ($user){
                 $query->where('userID', $user->id);
             })->with('teachers')->get();
+            $queriedCourses = Course::whereHas('students', function($query) use ($user){
+                $query->where('userID', $user->id);
+            })->with('teachers')->withSearch($query)->get()
         }
+
         return view('course.index', [
-            'courses' => $courses
+            'courses' => $courses,
+            'queriedCourses' => $queriedCourses
         ]);
     }
 
