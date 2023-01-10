@@ -38,7 +38,7 @@ class CourseController extends Controller
             })->with('teachers')->get();
             $queriedCourses = Course::whereHas('students', function($query) use ($user){
                 $query->where('userID', $user->id);
-            })->with('teachers')->withSearch($query)->get()
+            })->with('teachers')->withSearch($query)->get();
         }
 
         return view('course.index', [
