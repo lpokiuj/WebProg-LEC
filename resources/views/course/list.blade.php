@@ -15,6 +15,11 @@
         text-decoration: none;
         border-radius: 10px;
     }
+    .card-title{
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
     .card-text{
         /* text-overflow: ellipsis; */
         overflow: hidden;
@@ -33,8 +38,11 @@
                         What do you want to learn?
                     </h1>
                 </label>
-                <input class="form-control" type="search" placeholder="Search Courses here..." aria-label="Search">
-                <button class="btn btn-outline-success text-white mt-2" style="border: 2px solid white;" type="submit">Search</button>
+                <form class="form-inline my-2 my-lg-0" style="padding: 0 2rem;" action="/list-course">
+                    <input type="hidden" name="sort" value="{{ request('sort', '') }}">
+                    <input class="form-control mr-sm-2 py-2" type="search" placeholder="Search Movies Name.." aria-label="Search Movies" name="search" value="{{ request('search') }}">
+                    <button type="submit" class="btn btn-outline-success text-white mt-2" style="border: 2px solid white;">Submit</button>
+                </form>
             </form>
         </div>
     </div>
@@ -42,7 +50,7 @@
         <h1>Course List</h1>
     </div>
     <div class="row" style="min-height: 980px">
-        @forelse ($courses as $course)
+        @forelse ($queriedCourses as $course)
         <a href="/courses/{{$course->id}}" class="card m-2 text-dark" style="width: 18rem; height: 20rem; text-decoration: none;">
             <div class="card-body">
                 <h5 class="card-title">{{ $course->name }}</h5>

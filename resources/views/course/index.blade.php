@@ -9,7 +9,6 @@
     .card:hover{
         box-shadow: 0 0px 10px rgba(13,110,253);
     }
-
     .add-course{
         height: 50px;
         text-decoration: none;
@@ -40,8 +39,11 @@
                         What do you want to learn?
                     </h1>
                 </label>
-                <input class="form-control" type="search" placeholder="Search Courses here..." aria-label="Search">
-                <button class="btn btn-outline-success text-white mt-2" style="border: 2px solid white;" type="submit">Search</button>
+                <form class="form-inline my-2 my-lg-0" style="padding: 0 2rem;" action="/courses">
+                    <input type="hidden" name="sort" value="{{ request('sort', '') }}">
+                    <input class="form-control mr-sm-2 py-2" type="search" placeholder="Search Movies Name.." aria-label="Search Movies" name="search" value="{{ request('search') }}">
+                    <button type="submit" class="btn btn-outline-success text-white mt-2" style="border: 2px solid white;">Submit</button>
+                </form>
             </form>
         </div>
     </div>
@@ -80,7 +82,7 @@
                 @endif
             @else
                 @if($courses->count() > 0)
-                    @foreach ($courses as $course)
+                    @foreach ($queriedCourses as $course)
                     <a href="/courses/{{$course->id}}" class="card m-2 text-dark" style="width: 18rem; height: 20rem; text-decoration: none;">
                         <div class="card-body">
                             <h5 class="card-title">{{ $course->name }}</h5>
@@ -94,7 +96,7 @@
                     </a>
                     @endforeach
                     @else
-                    <h3 class="d-flex justify-content-center align-items-center" style="filter:invert(80%); height: 20rem;">No course has been signed</h3>
+                    <h3 class="d-flex justify-content-center align-items-center" style="filter:invert(80%); height: 20rem;">No course has been Assigned</h3>
                 @endif
             @endif
         @endguest
