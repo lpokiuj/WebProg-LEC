@@ -26,11 +26,6 @@ Route::get('/register/{lang}', function ($lang) {
     return view ('user.register');
 });
 
-Route::get('/courses/{lang}', function ($lang) {
-    App::setLocale($lang);
-    return view ('course.index');
-});
-
 Route::group(['middleware' => ['isTeacher']], function(){
     Route::resource('forums', ForumController::class);
     Route::resource('courses', CourseController::class);
