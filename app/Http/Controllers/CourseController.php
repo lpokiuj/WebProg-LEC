@@ -17,22 +17,33 @@ class CourseController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        $query = $request->query('search', '');
+
         $user = User::find(Auth::id());
         $courses = [];
+        $queriedCourses = [];
         if($user->isTeacher){
             $courses = Course::whereHas('teachers', function($query) use ($user){
                 $query->where('userID', $user->id);
             })->with('teachers')->get();
+            $queriedCourses = Course::whereHas('teachers', function($query) use ($user){
+                $query->where('userID', $user->id);
+            })->with('teachers')->withSearch($query)->get();
         }
         else{
             $courses = Course::whereHas('students', function($query) use ($user){
                 $query->where('userID', $user->id);
             })->with('teachers')->get();
+            $queriedCourses = Course::whereHas('students', function($query) use ($user){
+                $query->where('userID', $user->id);
+            })->with('teachers')->withSearch($query)->get();
         }
+
         return view('course.index', [
-            'courses' => $courses
+            'courses' => $courses,
+            'queriedCourses' => $queriedCourses
         ]);
     }
 
@@ -165,8 +176,10 @@ class CourseController extends Controller
         return redirect('/courses');
     }
 
-    public function courseList()
+    public function courseList(Request $request)
     {
+        $query = $request->query('search', '');
+
         $user = User::find(Auth::id());
         if($user->isTeacher){
             abort(401);
@@ -176,8 +189,13 @@ class CourseController extends Controller
             $query->where('userID', $user->id);
         })->get();
 
+        $queriedCourses = Course::whereDoesntHave('students', function($query) use ($user){
+            $query->where('userID', $user->id);
+        })->withSearch($query)->get();
+
         return view('course.list', [
-            'courses' => $courses
+            'courses' => $courses,
+            'queriedCourses' => $queriedCourses
         ]);
     }
 
