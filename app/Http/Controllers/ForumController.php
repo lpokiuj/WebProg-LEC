@@ -139,8 +139,12 @@ class ForumController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Course $course, Forum $forum)
     {
         //
+        Storage::delete($forum->attachment);
+        Forum::destroy($forum->id);
+
+        return redirect('/courses/'.$course->id);
     }
 }
