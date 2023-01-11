@@ -128,7 +128,7 @@
                         <div class="d-flex text-dark" style="min-width: 25%;">
                             <div class="d-flex bg-primary py-2 text-white" style="border-radius: 5px;">
                                 <div class="mx-4">{{$forum->attachment}}</div>
-                                <a href="" class="me-4" style="cursor: pointer;">
+                                <a href="/storage/{{$forum->attachment}}" download class="me-4" style="cursor: pointer;">
                                     <img src="/Download.svg" style="filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(108deg) brightness(106%) contrast(104%);" alt="">
                                 </a>
                             </div>
