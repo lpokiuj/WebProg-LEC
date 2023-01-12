@@ -41,7 +41,7 @@
                 </label>
                 <form class="form-inline my-2 my-lg-0" style="padding: 0 2rem;" action="/courses">
                     <input type="hidden" name="sort" value="{{ request('sort', '') }}">
-                    <input class="form-control mr-sm-2 py-2" type="search" placeholder="Search Movies Name.." aria-label="Search Movies" name="search" value="{{ request('search') }}">
+                    <input class="form-control mr-sm-2 py-2" type="search" placeholder="Search Courses Name.." aria-label="Search Movies" name="search" value="{{ request('search') }}">
                     <button type="submit" class="btn btn-outline-success text-white mt-2" style="border: 2px solid white;">Submit</button>
                 </form>
             </form>
