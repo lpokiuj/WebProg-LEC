@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\ForumController;
 use App\Http\Controllers\UserController;
+use Illuminate\Support\Facades\App;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,6 +16,15 @@ use App\Http\Controllers\UserController;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('/login/{lang}', function ($lang) {
+    App::setLocale($lang);
+    return view ('user.login');
+});
+
+Route::get('/register/{lang}', function ($lang) {
+    App::setLocale($lang);
+    return view ('user.register');
+});
 
 Route::group(['middleware' => ['isTeacher']], function(){
     Route::resource('forums', ForumController::class);

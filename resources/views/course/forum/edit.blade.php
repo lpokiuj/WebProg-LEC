@@ -1,7 +1,10 @@
 @extends('template')
 
 @section('content')
-<div class="container">
+<div class="container" style="min-height: 100vh">
+    <div class="row">
+        <h1 class="text-primary mt-3">Edit</h1>
+    </div>
     <div class="row text-danger">
         @if ($errors->any())
             <ul class="">
@@ -12,6 +15,13 @@
         @endif
     </div>
     <div class="row">
+        <form action="/courses/{{$course->id}}/forums/{{$forum->id}}" method="POST" enctype="multipart/form-data">
+            @method('DELETE')
+            @csrf
+            <button class="btn btn-danger" type="submit" style="width: 100%;">Remove Forum</button>
+        </form>
+    </div>
+    <div class="row mt-3">
         <form action="/courses/{{ $course->id }}/forums/{{ $forum->id }}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('PUT')
@@ -45,19 +55,6 @@
             </div>
 
             <button type="submit" class="btn btn-primary mb-5" style="width: 100%">Submit</button>
-            <!-- <label for="title">Title: </label>
-            <input type="text" name="title" id="" value="{{ $forum->title }}"> -->
-            <!-- <label for="description">Description: </label>
-            <input type="text" name="description" value="{{ $forum->description }}">
-            <label for="attachment">Attachment: </label>
-            <input type="file" name="attachment" value="{{ $forum->attachment }}"> -->
-            <!-- <div>
-                <label for="objective">Objective</label>
-                <input type="text" name="objective[]">
-                <input type="text" name="objective[]">
-                <input type="text" name="objective[]">
-            </div> -->
-            <!-- <button type="submit">Submit</button> -->
         </form>
     </div>
 
